@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Northstar helps ambitious teams turn bold ideas into clear, measurable growth.">
+  <title>Northstar — Make your next move matter</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #14241f;
+      --muted: #64716b;
+      --paper: #f7f8f3;
+      --green: #b9ef75;
+      --deep: #19352d;
+      --line: rgba(20, 36, 31, .13);
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+
+    .topbar { height: 82px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-size: 18px; font-weight: 750; letter-spacing: -.06em; }
+    .brand-mark { width: 28px; height: 28px; display: grid; place-items: center; background: var(--green); border-radius: 50% 50% 50% 10%; font-size: 15px; }
+    .nav { display: flex; align-items: center; gap: 34px; color: #46554e; font-size: 13px; }
+    .nav a:hover, .text-link:hover { color: #4e7a27; }
+    .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; border-radius: 999px; background: var(--ink); color: white; padding: 13px 19px; font-size: 13px; font-weight: 650; transition: transform .2s, background .2s; }
+    .nav-cta:hover, .button:hover { transform: translateY(-2px); background: #315447; }
+    .menu-toggle { display: none; border: 0; background: transparent; color: var(--ink); font-size: 25px; cursor: pointer; }
+
+    .hero { display: grid; grid-template-columns: 1.04fr .96fr; gap: 54px; align-items: center; padding: 76px 0 92px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: #4e672d; font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #82c64b; }
+    h1 { max-width: 610px; margin: 22px 0 20px; font-size: clamp(48px, 6vw, 76px); line-height: .99; letter-spacing: -.075em; font-weight: 570; }
+    h1 em { color: #729e4e; font-family: var(--serif); font-weight: 400; }
+    .hero-copy { max-width: 455px; color: var(--muted); font-size: 16px; line-height: 1.75; }
+    .hero-actions { display: flex; gap: 22px; align-items: center; margin-top: 30px; }
+    .text-link { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; font-weight: 650; transition: color .2s; }
+    .hero-note { display: flex; align-items: center; gap: 13px; margin-top: 48px; color: #6b7770; font-size: 11px; }
+    .avatars { display: flex; padding-left: 4px; }
+    .avatar { width: 27px; height: 27px; margin-left: -4px; display: grid; place-items: center; border: 2px solid var(--paper); border-radius: 50%; background: #d5a58c; color: #fff; font-size: 9px; font-weight: 700; }
+    .avatar:nth-child(2) { background: #769580; }
+    .avatar:nth-child(3) { background: #d2b35f; }
+    .avatar:nth-child(4) { background: #8199a4; }
+
+    .visual { min-height: 435px; position: relative; overflow: hidden; border-radius: 10px 150px 10px 10px; background: #d9e7d2; }
+    .visual::before { content: ''; position: absolute; width: 390px; height: 390px; top: 45px; left: 50%; transform: translateX(-50%); border: 1px solid rgba(25, 53, 45, .15); border-radius: 50%; }
+    .visual::after { content: ''; position: absolute; width: 280px; height: 280px; top: 100px; left: 50%; transform: translateX(-50%); border: 1px solid rgba(25, 53, 45, .16); border-radius: 50%; }
+    .sun { position: absolute; top: 64px; left: 50%; width: 110px; height: 110px; transform: translateX(-50%); border-radius: 50%; background: #c1ed79; box-shadow: 0 0 70px rgba(184, 232, 116, .7); }
+    .hill { position: absolute; z-index: 1; bottom: -110px; left: -10%; width: 120%; height: 280px; border-radius: 50% 50% 0 0; background: #749578; transform: rotate(-8deg); }
+    .hill.hill-back { bottom: -75px; left: 18%; width: 115%; height: 230px; background: #a0bc91; transform: rotate(12deg); }
+    .hill.hill-front { bottom: -165px; left: -15%; width: 130%; height: 250px; background: #31574a; transform: rotate(-4deg); }
+    .visual-label { position: absolute; z-index: 3; top: 22px; right: 24px; padding: 9px 12px; border: 1px solid rgba(25,53,45,.18); border-radius: 99px; color: #345044; font-size: 10px; letter-spacing: .04em; }
+    .visual-caption { position: absolute; z-index: 3; bottom: 25px; left: 26px; color: white; font-family: var(--serif); font-size: 19px; font-style: italic; }
+
+    .trust { padding: 25px 0 33px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .trust-inner { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .trust-label { color: #78827c; font-size: 10px; letter-spacing: .11em; text-transform: uppercase; }
+    .client-list { display: flex; flex: 1; justify-content: space-around; align-items: center; gap: 20px; color: #718078; }
+    .client-list span { font-size: 15px; font-weight: 750; letter-spacing: -.05em; }
+    .client-list span:nth-child(2) { font-family: var(--serif); font-style: italic; font-size: 18px; }
+    .client-list span:nth-child(3) { font-size: 13px; letter-spacing: .12em; }
+    .client-list span:nth-child(4) { font-weight: 500; letter-spacing: .04em; }
+    .client-list span:nth-child(5) { font-family: var(--serif); font-size: 18px; }
+
+    .section { padding: 105px 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 44px; }
+    h2 { max-width: 570px; margin: 15px 0 0; font-size: clamp(36px, 4.5vw, 54px); line-height: 1.05; letter-spacing: -.065em; font-weight: 550; }
+    .section-intro { max-width: 335px; margin: 0 0 3px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .services { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+    .service { padding: 28px 28px 30px 0; border-bottom: 1px solid var(--line); }
+    .service + .service { padding-left: 28px; border-left: 1px solid var(--line); }
+    .service-icon { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #e6eddf; color: #507042; font-size: 18px; }
+    .service h3 { margin: 22px 0 10px; font-size: 17px; letter-spacing: -.03em; }
+    .service p { max-width: 290px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .service-num { float: right; color: #99a39d; font-size: 11px; }
+
+    .about { padding: 76px 0; background: #e9eee5; }
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 90px; align-items: center; }
+    .about-mark { position: relative; display: grid; min-height: 300px; place-items: center; overflow: hidden; border-radius: 8px; background: #c7d8bd; }
+    .about-mark::before, .about-mark::after { content: ''; position: absolute; width: 220px; height: 220px; border: 1px solid rgba(25,53,45,.2); border-radius: 50%; }
+    .about-mark::after { width: 150px; height: 150px; }
+    .compass { z-index: 1; color: #31574a; font-size: 55px; }
+    .about-copy h2 { max-width: 540px; }
+    .about-copy p { max-width: 510px; margin: 18px 0 25px; color: #58665f; font-size: 14px; line-height: 1.8; }
+    .stats { display: flex; gap: clamp(28px, 5vw, 70px); margin-top: 33px; padding-top: 24px; border-top: 1px solid rgba(20,36,31,.16); }
+    .stat strong { display: block; font-size: 27px; letter-spacing: -.06em; }
+    .stat span { display: block; margin-top: 5px; color: #66736c; font-size: 10px; letter-spacing: .04em; }
+
+    .contact { padding: 95px 0; }
+    .contact-card { position: relative; overflow: hidden; padding: 62px; border-radius: 9px 100px 9px 9px; background: var(--deep); color: white; }
+    .contact-card::after { content: ''; position: absolute; right: -100px; bottom: -230px; width: 500px; height: 500px; border: 1px solid rgba(185,239,117,.23); border-radius: 50%; box-shadow: 0 0 0 55px rgba(185,239,117,.04), 0 0 0 110px rgba(185,239,117,.035); }
+    .contact-card .eyebrow { color: var(--green); }
+    .contact-card h2 { position: relative; z-index: 1; max-width: 640px; margin: 20px 0 25px; }
+    .contact-card .button { position: relative; z-index: 1; background: var(--green); color: var(--ink); }
+    .contact-card .button:hover { background: #d1f6a3; }
+    footer { padding: 25px 0 32px; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 18px; color: #78827c; font-size: 11px; }
+    .footer-links { display: flex; gap: 22px; }
+    .footer-links a:hover { color: var(--ink); }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .topbar { height: 70px; }
+      .menu-toggle { display: block; }
+      .nav { position: absolute; z-index: 5; top: 70px; left: 0; right: 0; display: none; padding: 20px 24px 24px; background: var(--paper); border-bottom: 1px solid var(--line); }
+      .nav.open { display: flex; align-items: stretch; flex-direction: column; gap: 19px; }
+      .nav-cta { align-self: flex-start; }
+      .hero { grid-template-columns: 1fr; gap: 42px; padding: 60px 0 65px; }
+      h1 { max-width: 520px; font-size: clamp(48px, 12vw, 68px); }
+      .hero-note { margin-top: 34px; }
+      .visual { min-height: 350px; border-top-right-radius: 110px; }
+      .visual::before { width: 330px; height: 330px; }
+      .visual::after { width: 235px; height: 235px; }
+      .sun { width: 90px; height: 90px; }
+      .trust-inner { align-items: flex-start; flex-direction: column; }
+      .client-list { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+      .client-list span { font-size: 13px; }
+      .section { padding: 76px 0; }
+      .section-heading { align-items: flex-start; flex-direction: column; margin-bottom: 32px; }
+      .services { grid-template-columns: 1fr; }
+      .service, .service + .service { padding: 24px 0; border-left: 0; }
+      .about { padding: 58px 0; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .about-mark { min-height: 240px; }
+      .contact { padding: 70px 0; }
+      .contact-card { padding: 42px 28px; border-top-right-radius: 70px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#home" aria-label="Northstar home"><span class="brand-mark" aria-hidden="true">✳</span>northstar</a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#services">What we do</a>
+      <a href="#about">Our approach</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-cta" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="wrap hero" id="home">
+      <div>
+        <span class="eyebrow">A brighter way forward</span>
+        <h1>Make your next move <em>matter.</em></h1>
+        <p class="hero-copy">We help ambitious businesses find their direction, build with confidence, and turn big ideas into meaningful progress.</p>
+        <div class="hero-actions">
+          <a class="button" href="#contact">Start a conversation <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="#services">Explore what we do <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-note">
+          <div class="avatars" aria-hidden="true"><span class="avatar">A</span><span class="avatar">M</span><span class="avatar">J</span><span class="avatar">+</span></div>
+          <span>Good people. Clear thinking.<br>Work that moves you forward.</span>
+        </div>
+      </div>
+      <div class="visual" role="img" aria-label="Illustration of a sun rising over green hills">
+        <span class="sun"></span><span class="hill hill-back"></span><span class="hill"></span><span class="hill hill-front"></span>
+        <span class="visual-label">Find your true north</span>
+        <span class="visual-caption">The future looks good from here.</span>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="Who we work with">
+      <div class="wrap trust-inner">
+        <span class="trust-label">Built alongside teams at</span>
+        <div class="client-list" aria-label="Example partner names"><span>form&amp;field</span><span>COMMON GROUND</span><span>WILLOW</span><span>goodfolk</span><span>MONUMENT</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="services">
+      <div class="section-heading">
+        <div><span class="eyebrow">How we help</span><h2>Big-picture thinking.<br>Practical next steps.</h2></div>
+        <p class="section-intro">The best work starts with listening. Then we bring the right mix of strategy, creativity, and craft to get you where you want to go.</p>
+      </div>
+      <div class="services">
+        <article class="service"><span class="service-num">01</span><span class="service-icon" aria-hidden="true">⌖</span><h3>Find your direction</h3><p>Get aligned on what matters most. We turn complexity into a clear, confident plan your whole team can move behind.</p></article>
+        <article class="service"><span class="service-num">02</span><span class="service-icon" aria-hidden="true">✳</span><h3>Build what’s next</h3><p>Bring better ideas to life with thoughtful design, useful technology, and experiences made for real people.</p></article>
+        <article class="service"><span class="service-num">03</span><span class="service-icon" aria-hidden="true">↗</span><h3>Grow with purpose</h3><p>Create lasting momentum. We help you learn, adapt, and keep making progress long after launch day.</p></article>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="wrap about-grid">
+        <div class="about-mark" aria-hidden="true"><span class="compass">✳</span></div>
+        <div class="about-copy">
+          <span class="eyebrow">A little about us</span>
+          <h2>Good work begins with good partnership.</h2>
+          <p>Northstar is an independent team of thinkers, makers, and problem-solvers. We work shoulder to shoulder with our clients—asking better questions, staying curious, and keeping our eyes on the outcome.</p>
+          <a class="text-link" href="#contact">Get to know us <span aria-hidden="true">→</span></a>
+          <div class="stats"><div class="stat"><strong>01</strong><span>Team, working as one</span></div><div class="stat"><strong>∞</strong><span>Room to think bigger</span></div><div class="stat"><strong>100%</strong><span>Care in every detail</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap contact" id="contact">
+      <div class="contact-card">
+        <span class="eyebrow">Your next chapter starts here</span>
+        <h2>Have a good question? We’re all ears.</h2>
+        <a class="button" href="mailto:hello@northstar.example">Tell us what you’re thinking <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">✳</span>northstar</a>
+      <span>© <span id="year"></span> Northstar. Made for what’s next.</span>
+      <div class="footer-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const navigation = document.querySelector('.nav');
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = navigation.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+    });
+
+    navigation.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navigation.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Open navigation');
+      });
+    });
+
+    document.querySelector('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
