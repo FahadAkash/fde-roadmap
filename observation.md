@@ -7,7 +7,7 @@
 
 ## 2. Prompt Used
 
-> "Make a  responsible website  for my FDE company
+> "Make a  responsive  website  for my FDE company
 "
 
 ## 3. Code Quality Observation
